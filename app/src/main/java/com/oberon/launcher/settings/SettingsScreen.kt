@@ -17,6 +17,7 @@ import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.heightIn
+import androidx.compose.foundation.layout.navigationBarsPadding
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.statusBarsPadding
@@ -27,6 +28,7 @@ import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.ArrowBack
 import androidx.compose.material.icons.filled.Delete
 import androidx.compose.material.icons.filled.Lock
 import androidx.compose.material.icons.filled.Star
@@ -34,6 +36,7 @@ import androidx.compose.material3.AlertDialog
 import androidx.compose.material3.FilterChip
 import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedButton
 import androidx.compose.material3.Slider
@@ -66,7 +69,7 @@ import kotlinx.coroutines.launch
 import kotlin.math.roundToInt
 
 @Composable
-fun SettingsScreen(vm: LauncherViewModel, modifier: Modifier = Modifier) {
+fun SettingsScreen(vm: LauncherViewModel, onClose: () -> Unit, modifier: Modifier = Modifier) {
     val context = LocalContext.current
     val scope = rememberCoroutineScope()
 
@@ -116,9 +119,21 @@ fun SettingsScreen(vm: LauncherViewModel, modifier: Modifier = Modifier) {
     }
 
     LazyColumn(
-        modifier = modifier.fillMaxWidth().statusBarsPadding(),
+        modifier = modifier.fillMaxWidth().statusBarsPadding().navigationBarsPadding(),
         contentPadding = androidx.compose.foundation.layout.PaddingValues(bottom = 32.dp)
     ) {
+        item {
+            Row(
+                modifier = Modifier.fillMaxWidth().padding(horizontal = 4.dp),
+                verticalAlignment = Alignment.CenterVertically
+            ) {
+                IconButton(onClick = onClose) {
+                    Icon(Icons.Filled.ArrowBack, contentDescription = "Geri")
+                }
+                Text("Ayarlar", style = MaterialTheme.typography.titleLarge, fontWeight = FontWeight.SemiBold)
+            }
+        }
+
         item {
             Surface(color = MaterialTheme.colorScheme.surfaceContainerLow) {
                 Row(

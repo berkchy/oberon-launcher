@@ -1,5 +1,7 @@
 package com.oberon.launcher.launcher
 
+import androidx.compose.foundation.background
+import androidx.compose.foundation.gestures.detectVerticalDragGestures
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -9,6 +11,7 @@ import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.navigationBarsPadding
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.statusBarsPadding
 import androidx.compose.foundation.layout.width
@@ -16,10 +19,13 @@ import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.lazy.grid.GridItemSpan
 import androidx.compose.foundation.lazy.grid.LazyVerticalGrid
 import androidx.compose.foundation.lazy.grid.items
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.ArrowBack
 import androidx.compose.material.icons.filled.Clear
 import androidx.compose.material.icons.filled.MoreVert
 import androidx.compose.material.icons.filled.Search
+import androidx.compose.material.icons.filled.Settings
 import androidx.compose.material3.DropdownMenu
 import androidx.compose.material3.DropdownMenuItem
 import androidx.compose.material3.Icon
@@ -36,12 +42,18 @@ import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.input.pointer.pointerInput
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import com.oberon.launcher.data.AppInfo
 
 @Composable
-fun AppDrawer(vm: LauncherViewModel, modifier: Modifier = Modifier) {
+fun AppDrawer(
+    vm: LauncherViewModel,
+    onClose: () -> Unit,
+    onOpenSettings: () -> Unit,
+    modifier: Modifier = Modifier
+) {
     val sortedApps by vm.sortedVisibleApps.collectAsState()
     val gridColumns by vm.gridColumns.collectAsState()
     val badges by vm.badges.collectAsState()
@@ -49,6 +61,7 @@ fun AppDrawer(vm: LauncherViewModel, modifier: Modifier = Modifier) {
     var query by rememberSaveable { mutableStateOf("") }
     var sortExpanded by remember { mutableStateOf(false) }
     var selected by remember { mutableStateOf<AppInfo?>(null) }
+    var dragAcc by remember { mutableStateOf(0f) }
 
     val filtered = remember(sortedApps, query) {
         if (query.isNotBlank()) {
@@ -59,11 +72,29 @@ fun AppDrawer(vm: LauncherViewModel, modifier: Modifier = Modifier) {
         } else sortedApps
     }
 
-    Column(modifier = modifier.fillMaxSize().statusBarsPadding()) {
+    Column(
+        modifier = modifier
+            .fillMaxSize()
+            .background(MaterialTheme.colorScheme.surface)
+            .pointerInput(Unit) {
+                detectVerticalDragGestures(
+                    onVerticalDrag = { _, dy -> dragAcc += dy },
+                    onDragEnd = {
+                        if (dragAcc > 140.dp.toPx()) onClose()
+                        dragAcc = 0f
+                    },
+                    onDragCancel = { dragAcc = 0f }
+                )
+            }
+            .statusBarsPadding()
+    ) {
         Row(
-            modifier = Modifier.fillMaxWidth().padding(horizontal = 16.dp),
+            modifier = Modifier.fillMaxWidth().padding(top = 8.dp, end = 4.dp),
             verticalAlignment = Alignment.CenterVertically
         ) {
+            IconButton(onClick = onClose) {
+                Icon(Icons.Filled.ArrowBack, contentDescription = "Kapat")
+            }
             OutlinedTextField(
                 value = query,
                 onValueChange = { query = it },
@@ -78,9 +109,8 @@ fun AppDrawer(vm: LauncherViewModel, modifier: Modifier = Modifier) {
                     }
                 },
                 singleLine = true,
-                shape = androidx.compose.foundation.shape.RoundedCornerShape(28.dp)
+                shape = RoundedCornerShape(28.dp)
             )
-            Spacer(Modifier.width(8.dp))
             Box {
                 IconButton(onClick = { sortExpanded = true }) {
                     Icon(Icons.Filled.MoreVert, contentDescription = "Sıralama")
@@ -100,8 +130,11 @@ fun AppDrawer(vm: LauncherViewModel, modifier: Modifier = Modifier) {
                     )
                 }
             }
+            IconButton(onClick = onOpenSettings) {
+                Icon(Icons.Filled.Settings, contentDescription = "Ayarlar")
+            }
         }
-        Spacer(Modifier.height(8.dp))
+        Spacer(Modifier.height(4.dp))
         Text(
             text = sortLabel(drawerSort),
             style = MaterialTheme.typography.labelMedium,
@@ -111,8 +144,11 @@ fun AppDrawer(vm: LauncherViewModel, modifier: Modifier = Modifier) {
 
         LazyVerticalGrid(
             columns = GridCells.Fixed(gridColumns.coerceIn(3, 7)),
-            modifier = Modifier.fillMaxSize(),
-            contentPadding = PaddingValues(horizontal = 12.dp, vertical = 8.dp),
+            modifier = Modifier.fillMaxSize().navigationBarsPadding(),
+            contentPadding = PaddingValues(
+                horizontal = 12.dp,
+                vertical = 8.dp
+            ),
             verticalArrangement = Arrangement.spacedBy(4.dp)
         ) {
             items(filtered, key = { it.key }) { app ->
@@ -133,7 +169,10 @@ fun AppDrawer(vm: LauncherViewModel, modifier: Modifier = Modifier) {
                         style = MaterialTheme.typography.bodyMedium,
                         textAlign = TextAlign.Center,
                         color = MaterialTheme.colorScheme.onSurface.copy(alpha = 0.6f),
-                        modifier = Modifier.fillMaxWidth().padding(vertical = 24.dp)
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .navigationBarsPadding()
+                            .padding(vertical = 24.dp)
                     )
                 }
             }

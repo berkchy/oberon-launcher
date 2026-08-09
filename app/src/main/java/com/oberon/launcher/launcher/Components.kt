@@ -21,12 +21,9 @@ import androidx.compose.material.icons.filled.Clear
 import androidx.compose.material.icons.filled.Info
 import androidx.compose.material.icons.filled.Lock
 import androidx.compose.material.icons.filled.PlayArrow
-import androidx.compose.material.icons.filled.Settings
 import androidx.compose.material3.AlertDialog
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.NavigationBar
-import androidx.compose.material3.NavigationBarItem
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
@@ -37,7 +34,6 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.asImageBitmap
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.foundation.Image
-import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.text.style.TextOverflow
@@ -45,12 +41,11 @@ import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import androidx.core.graphics.drawable.toBitmap
 import androidx.compose.ui.platform.LocalDensity
-import com.oberon.launcher.R
 import com.oberon.launcher.data.AppInfo
 import android.graphics.drawable.Drawable
 import kotlin.math.roundToInt
 
-enum class LauncherTab { Home, Apps, Settings }
+enum class LauncherSurface { Home, Drawer, Settings }
 
 @Composable
 fun AppIcon(
@@ -181,29 +176,5 @@ private fun MenuRow(icon: androidx.compose.ui.graphics.vector.ImageVector, label
         Icon(icon, contentDescription = null, tint = MaterialTheme.colorScheme.primary)
         Spacer(Modifier.width(16.dp))
         Text(label, style = MaterialTheme.typography.bodyLarge)
-    }
-}
-
-@Composable
-fun BottomNav(selected: LauncherTab, onSelect: (LauncherTab) -> Unit) {
-    NavigationBar {
-        NavigationBarItem(
-            selected = selected == LauncherTab.Home,
-            onClick = { onSelect(LauncherTab.Home) },
-            icon = { Icon(painterResource(R.drawable.ic_nav_home), contentDescription = null) },
-            label = { Text("Ana Ekran") }
-        )
-        NavigationBarItem(
-            selected = selected == LauncherTab.Apps,
-            onClick = { onSelect(LauncherTab.Apps) },
-            icon = { Icon(painterResource(R.drawable.ic_nav_apps), contentDescription = null) },
-            label = { Text("Uygulamalar") }
-        )
-        NavigationBarItem(
-            selected = selected == LauncherTab.Settings,
-            onClick = { onSelect(LauncherTab.Settings) },
-            icon = { Icon(Icons.Filled.Settings, contentDescription = null) },
-            label = { Text("Ayarlar") }
-        )
     }
 }
