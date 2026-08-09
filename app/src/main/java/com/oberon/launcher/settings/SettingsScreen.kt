@@ -20,7 +20,6 @@ import androidx.compose.foundation.layout.heightIn
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.statusBarsPadding
-import androidx.compose.foundation.layout.weight
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
@@ -101,8 +100,8 @@ fun SettingsScreen(vm: LauncherViewModel, modifier: Modifier = Modifier) {
 
     val openLauncher = rememberLauncherForActivityResult(
         ActivityResultContracts.OpenDocument()
-    ) { uris ->
-        uris.forEach { uri ->
+    ) { uri ->
+        if (uri != null) {
             scope.launch {
                 runCatching {
                     val text = context.contentResolver.openInputStream(uri)
@@ -366,10 +365,10 @@ private fun SettingLabel(text: String) {
 }
 
 @Composable
-private fun <T> ChipRow(
-    options: List<Pair<String, T>>,
-    current: T,
-    onSelect: (T) -> Unit
+private fun ChipRow(
+    options: List<Pair<String, String>>,
+    current: String,
+    onSelect: (String) -> Unit
 ) {
     Row(
         modifier = Modifier.fillMaxWidth().horizontalScroll(rememberScrollState())
@@ -380,7 +379,7 @@ private fun <T> ChipRow(
             FilterChip(
                 selected = current == value,
                 onClick = { onSelect(value) },
-                label = { Text(label.toString()) }
+                label = { Text(label) }
             )
         }
     }

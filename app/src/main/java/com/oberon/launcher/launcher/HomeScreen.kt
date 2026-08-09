@@ -11,7 +11,6 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.statusBarsPadding
-import androidx.compose.foundation.layout.weight
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.grid.GridCells
 import androidx.compose.foundation.lazy.grid.GridItemSpan
@@ -151,7 +150,7 @@ fun SearchField(
         },
         singleLine = true,
         keyboardActions = androidx.compose.foundation.text.KeyboardActions(onSearch = { onSearch() }),
-        keyboardOptions = androidx.compose.ui.text.input.KeyboardOptions(
+        keyboardOptions = androidx.compose.foundation.text.KeyboardOptions(
             imeAction = androidx.compose.ui.text.input.ImeAction.Search
         ),
         shape = RoundedCornerShape(28.dp)

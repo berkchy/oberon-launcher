@@ -113,7 +113,7 @@ class AppPrefs(private val context: Context) {
         out.put("searchEngine", str(Keys.SEARCH_ENGINE, "google"))
         out.put("favorites", str(Keys.FAVORITES, "[]"))
         out.put("usage", str(Keys.USAGE, "{}"))
-        out.put("hidden", JSONArray(data[stringSetPreferencesKey(Keys.HIDDEN)] ?: emptySet()))
+        out.put("hidden", JSONArray(data[stringSetPreferencesKey(Keys.HIDDEN)] ?: emptySet<String>()))
         return out.toString()
     }
 
