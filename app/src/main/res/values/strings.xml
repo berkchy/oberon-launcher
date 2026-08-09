@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Oberon Launcher</string>
+    <string name="badge_listener">Oberon Rozet Bildirimi</string>
+
+    <!-- Navigation -->
+    <string name="nav_home">Ana Ekran</string>
+    <string name="nav_apps">Uygulamalar</string>
+    <string name="nav_settings">Ayarlar</string>
+
+    <!-- Home -->
+    <string name="search_hint">Ara…</string>
+    <string name="empty_home">Listene bir şey ekle — ana ekranı doldurmak için uygulama ikonuna uzun bas</string>
+    <string name="dock">Dock</string>
+
+    <!-- Drawer -->
+    <string name="sort_alpha">A-Z</string>
+    <string name="sort_recent">Son Kullanılan</string>
+    <string name="sort_most">En Çok Kullanılan</string>
+
+    <!-- App long press -->
+    <string name="action_open">Aç</string>
+    <string name="action_home_add">Ana Ekrana Ekle</string>
+    <string name="action_home_remove">Ana Ekrandan Kaldır</string>
+    <string name="action_app_info">Uygulama Bilgisi</string>
+    <string name="action_hide">Gizle</string>
+    <string name="action_unhide">Gizlemeyi Kaldır</string>
+
+    <!-- Settings -->
+    <string name="settings_appearance">Görünüm</string>
+    <string name="settings_theme">Tema</string>
+    <string name="theme_system">Sistem</string>
+    <string name="theme_light">Açık</string>
+    <string name="theme_dark">Koyu</string>
+    <string name="settings_accent">Renk</string>
+    <string name="accent_dynamic">Dinamik (Monet)</string>
+    <string name="accent_custom">Özel Renk</string>
+    <string name="settings_grid">Izgara Boyutu</string>
+    <string name="settings_animation">Animasyon Hızı</string>
+    <string name="settings_drawer">Uygulama Sekmesi</string>
+    <string name="settings_sort">Sıralama</string>
+    <string name="settings_hidden">Gizli Uygulamalar</string>
+    <string name="settings_search_engine">Arama Motoru</string>
+    <string name="search_google">Google</string>
+    <string name="search_bing">Bing</string>
+    <string name="search_duck">DuckDuckGo</string>
+    <string name="settings_badges">Bildirim Rozetleri</string>
+    <string name="settings_badge_hint">Rozetler bu tercihle etkinleşir:</string>
+    <string name="settings_badge_open">Bildirim Erişimi Aç</string>
+    <string name="settings_data">Veri ve Yedekleme</string>
+    <string name="settings_backup">Yedeği Paylaş / Kaydet</string>
+    <string name="settings_restore">Dışarıdan Geri Yükle</string>
+    <string name="settings_reset">Fabrika Ayarları</string>
+    <string name="settings_about">Hakkında</string>
+    <string name="about_version">Oberon Launcher v1.0 — Hafif ve akıcı, Android 13 tarzı.</string>
+    <string name="icon_pack_installed">Yüklü İkon Paketi</string>
+    <string name="icon_pack_none">İkon paketi bulunamadı</string>
+
+    <!-- Misc -->
+    <string name="title_activity_settings">Ayarlar</string>
+    <string name="backup_ok">Yedek oluşturuldu</string>
+    <string name="restore_ok">Yedek geri yüklendi</string>
+    <string name="reset_ok">Ayarlar sıfırlandı</string>
+</resources>
